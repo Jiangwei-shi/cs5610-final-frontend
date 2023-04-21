@@ -79,13 +79,13 @@ const NavigationSidebar = () => {
           <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col ms-3">Profile</div>
         </div>
       </Link>
-      <a className={`list-group-item
-                    ${active === 'more'?'active':''}`}>
+      <Link to="/tuiter/login" className={`list-group-item ${active === 'login'?'active':''}`}>
         <div className="row">
-          <div className="col-1"><FontAwesomeIcon icon={faEllipsisH} size={"lg"}/></div>
-          <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col ms-3">More</div>
+          <div className="col-1"><FontAwesomeIcon icon={faUser} size={"lg"}/></div>
+          <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col ms-3">login</div>
         </div>
-      </a>
+      </Link>
+
     </div>
   );
 };
