@@ -20,7 +20,12 @@ const NavigationSidebar = () => {
   const active = paths[2];
   return (
     <div className="list-group">
-      <a className="list-group-item">Tuiter</a>
+      {/*<a className="list-group-item">Tuiter</a>*/}
+      <Link to="/tuiter/tuiter" className={`list-group-item ${active === 'tuiter'?'active':''}`}>
+        <div className="row">
+          <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col">tuiter</div>
+        </div>
+      </Link>
       <Link to="/tuiter/home" className={`list-group-item ${active === 'home'?'active':''}`}>
         <div className="row">
           <div className="col-1"><FontAwesomeIcon icon={faHome} size={"lg"}/></div>
