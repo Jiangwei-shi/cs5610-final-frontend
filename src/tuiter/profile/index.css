@@ -1,0 +1,21 @@
+
+.clickable{
+    cursor: pointer;
+}
+
+.user-top-part{
+    position: relative;
+    top: -65px;
+    border-left: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+
+}
+
+.user-img {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    overflow: hidden;
+    border: 2px solid black;
+}
