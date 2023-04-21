@@ -33,7 +33,7 @@ export const logoutThunk = createAsyncThunk(
 export const updateUserThunk = createAsyncThunk(
   "users/updateUser",
   async (user) => {
-    await userService.updateUser(user);
+    await userService.updateUserService(user);
     return user;
   }
 );

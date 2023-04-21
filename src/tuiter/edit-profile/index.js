@@ -1,20 +1,24 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft, faX, faXmark} from "@fortawesome/free-solid-svg-icons";
-import React, {useState} from "react";
+import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState } from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
-import {updateProfile} from "../reducers/profile-reducer";
+import { updateUserThunk } from '../../services/auth-thunks'
 
 const EditProfile = () => {
-  const {user} = useSelector((state) => state.profile);
-  const [profile, setProfile] = useState(user);
+  const currentUser = useSelector((state) => state.currentUser);
+  const [profile, setProfile] = useState(currentUser);
+  console.log(currentUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleSaveButton = () => {
-    dispatch(updateProfile(profile));
-    navigate(-1);
+  const handleSave = () => {
+    dispatch(updateUserThunk(profile.id));
   };
+
+  useEffect(() => {
+    setProfile(currentUser);
+  }, [currentUser]);
 
   return(
     <div className="container">
@@ -25,7 +29,7 @@ const EditProfile = () => {
             <div className="col-10">
               <div className="row">
                 <div className="col"><h5 className="mt-2 ms-2">Edit Profile</h5></div>
-                <div className="col"><button className="btn btn-dark rounded-pill float-end" onClick={handleSaveButton}>Save</button></div>
+                <div className="col"><button className="btn btn-dark rounded-pill float-end" onClick={handleSave}>Save</button></div>
               </div>
 
             </div>
@@ -33,11 +37,12 @@ const EditProfile = () => {
         </div>
 
         <div className="list-group-item p-0">
-          <img className="img-fluid" src={`/images/${user.bannerPicture}`}/>
+          {/*<img className="img-fluid" src={`/images/${currentUser.bannerPicture}`}/>*/}
+          <img className="img-fluid" src={`/images/Elon_Mask.png`}/>
         </div>
         <div className="user-top-part ps-4 pe-4 pb-4">
           <div>
-            <img className="user-img rounded-pill" src={`/images/${user.profilePicture}`}/>
+            <img className="user-img rounded-pill" src={`/images/Elon_Mask.png`}/>
           </div>
           <br/>
 
