@@ -7,6 +7,7 @@ import HomeComponent from "./home";
 import whoReducer
   from "./reducers/who-reducer";
 import tuitsReducer from "./tuits/tuits-reducer";
+import resultsReducer from "./reducers/search-reducer";
 import { configureStore }
   from '@reduxjs/toolkit';
 import {Provider} from "react-redux";
@@ -19,7 +20,7 @@ import SearchScreen from "./search/search-screen";
 
 
 const store = configureStore(
-  {reducer: {who: whoReducer, tuitsData: tuitsReducer, currentUser: AuthReducer}});
+  {reducer: {who: whoReducer, tuitsData: tuitsReducer, currentUser: AuthReducer, results: resultsReducer}});
 
 function Tuiter() {
   return (

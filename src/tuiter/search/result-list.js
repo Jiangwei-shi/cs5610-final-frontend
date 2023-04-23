@@ -1,9 +1,8 @@
 import ResultItem from "./result-item";
 import results from "./results";
+import { connect } from 'react-redux';
 
-const ResultList = () => {
-    const loading = false;
-    
+const ResultList = ({ loading, results}) => {  
     return(
         <ul className="list-group">
           {
@@ -19,4 +18,9 @@ const ResultList = () => {
       );
 }
 
-export default ResultList
+const mapStateToProps = (state) => ({
+    loading: state.results.loading,
+    results: state.results.results
+});
+
+export default connect(mapStateToProps)(ResultList);
