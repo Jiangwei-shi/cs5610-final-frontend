@@ -22,7 +22,7 @@ const fetchResultsFailure = (error) => ({
 export const fetchResults = (keyword) => async (dispatch) => {
     try {
         dispatch(fetchResultsRequest());
-        const response = await axios.get(`http://localhost:4000/api/tuits/search?${encodeURIComponent(keyword)}`);
+        const response = await axios.get(`http://localhost:4000/api/tuits/search?keyword=${encodeURIComponent(keyword)}`);
         const results = response.data.slice(0, 10); // Get the top 10 results
         dispatch(fetchResultsSuccess(results));
     } catch (error) {

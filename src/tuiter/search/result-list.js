@@ -1,5 +1,4 @@
 import ResultItem from "./result-item";
-import results from "./results";
 import { connect } from 'react-redux';
 
 const ResultList = ({ loading, results}) => {  
