@@ -2,18 +2,20 @@ import './index.css';
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { profileThunk, logoutThunk, updateUserThunk } from "../../services/auth-thunks";
+import { profileThunk, logoutThunk } from "../../services/auth-thunks";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 function ProfileScreen() {
   const {currentUser} = useSelector((state) => state.currentUser);
   const [profile, setProfile] = useState(currentUser);
-  console.log(profile);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
     const fetchProfile = async () => {
       const { payload } = await dispatch(profileThunk());
       setProfile(payload);
@@ -21,8 +23,12 @@ function ProfileScreen() {
     fetchProfile();
   }, [dispatch]);
 
-  const joinedDate = new Date(profile.createdAt);
-  const formattedJoinedDate = `${joinedDate.getFullYear()}-${(joinedDate.getMonth() + 1).toString().padStart(2, '0')}-${joinedDate.getDate().toString().padStart(2, '0')}`;
+  if (!currentUser) {
+    return <div>你无权查看此页面，请先登录</div>;
+  }
+
+  // const joinedDate = new Date(profile.createdAt);
+  // const formattedJoinedDate = `${joinedDate.getFullYear()}-${(joinedDate.getMonth() + 1).toString().padStart(2, '0')}-${joinedDate.getDate().toString().padStart(2, '0')}`;
 
   return (
     <div className="container">
@@ -67,7 +73,7 @@ function ProfileScreen() {
           <div className="d-flex justify-content-start text-secondary">
             <div className="flex-box"><i className="bi bi-geo-alt"></i><span className="ms-1">{profile.location}</span></div>
             <div className="flex-box ms-3"><i className="bi bi-balloon"></i><span className="ms-1">{`Born in ${profile.dateOfBirth}`}</span></div>
-            <div className="flex-box ms-3"><i className="bi bi-calendar3"></i><span className="ms-1">{`Joined ${formattedJoinedDate}`}</span></div>
+            {/*<div className="flex-box ms-3"><i className="bi bi-calendar3"></i><span className="ms-1">{`Joined ${profile.createdAt}`}</span></div>*/}
           </div>
 
           <div className="d-flex justify-content-start">

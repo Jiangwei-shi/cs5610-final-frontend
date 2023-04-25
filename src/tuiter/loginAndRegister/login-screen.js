@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { loginThunk } from "../../services/auth-thunks";
+import { loginThunk } from '../../services/auth-thunks'
 function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +15,11 @@ function LoginScreen() {
       alert(e);
     }
   };
-  return ( <div>
+
+
+
+  return (
+    <div>
       <h1>Login Screen</h1>
       <div>
         <label>Username</label>
@@ -34,6 +38,9 @@ function LoginScreen() {
       <button onClick={handleLogin}>
         Login
       </button>
+      <button onClick={() => {
+      navigate('/tuiter/register');
+      }}>register</button>
     </div>
   );
 }

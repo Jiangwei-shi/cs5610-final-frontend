@@ -6,19 +6,21 @@ import {useNavigate} from "react-router";
 import { updateUserThunk } from '../../services/auth-thunks'
 
 const EditProfile = () => {
-  const currentUser = useSelector((state) => state.currentUser);
+  const currentUser = useSelector((state) => state.currentUser.currentUser);
   const [profile, setProfile] = useState(currentUser);
-  console.log(currentUser);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleSave = () => {
-    dispatch(updateUserThunk(profile.id));
+  const handleSave = async () => {
+    console.log(profile);
+    await dispatch(updateUserThunk(profile));
   };
 
   useEffect(() => {
-    setProfile(currentUser);
+    setProfile(profile);
   }, [currentUser]);
+
 
   return(
     <div className="container">
@@ -31,7 +33,6 @@ const EditProfile = () => {
                 <div className="col"><h5 className="mt-2 ms-2">Edit Profile</h5></div>
                 <div className="col"><button className="btn btn-dark rounded-pill float-end" onClick={handleSave}>Save</button></div>
               </div>
-
             </div>
           </div>
         </div>
@@ -45,7 +46,6 @@ const EditProfile = () => {
             <img className="user-img rounded-pill" src={`/images/Elon_Mask.png`}/>
           </div>
           <br/>
-
 
           <form className="form-floating">
             <input type="text" className="form-control"

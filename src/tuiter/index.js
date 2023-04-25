@@ -13,7 +13,8 @@ import {Provider} from "react-redux";
 import ProfileComponent from "./profile";
 import AuthReducer from "./reducers/auth-reducer";
 import EditProfile from "./edit-profile";
-import LoginScreen from "./screens/login-screen";
+import LoginScreen from "./loginAndRegister/login-screen";
+import RegisterScreen from './loginAndRegister/register-screen'
 const store = configureStore(
   {reducer: {who: whoReducer, tuitsData: tuitsReducer, currentUser: AuthReducer}});
 
@@ -33,6 +34,7 @@ function Tuiter() {
             <Route path="profile" element={<ProfileComponent/>}/>
             <Route path="edit-profile" element={<EditProfile/>}/>
             <Route path="login"  element={<LoginScreen />} />
+            <Route path="register" element={<RegisterScreen/>}/>
           </Routes>
         </div>
         <div className="d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4">
