@@ -1,22 +1,34 @@
 import { useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import { fetchResults } from "../../actions/search-action";
+import { useNavigate, useLocation } from 'react-router-dom';
+
 
 const SearchBar = ({fetchResults}) => {
     const [keyword, setKeyword] = useState();
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const searchKeyword = urlParams.get('keyword');
-        if (searchKeyword) {
-            setKeyword(decodeURIComponent(searchKeyword));
-            fetchResults(searchKeyword);
+    const handleSearch = () => {
+        if (keyword && keyword.trim()) {
+          fetchResults(keyword);
+          const searchParams = new URLSearchParams();
+          searchParams.set('keyword', keyword);
+          navigate(`/tuiter/search?${searchParams.toString()}`);
+        } else {
+          fetchResults('');
+          navigate(`/tuiter/search`);
         }
-    }, []);
-
-    const handleSearch = (keyword) => {
-        fetchResults(keyword);
-    };
+      };
+      
+      useState(() => {
+        const searchParams = new URLSearchParams(location.search);
+        const searchKeyword = searchParams.get('keyword');
+        if (searchKeyword) {
+          setKeyword(decodeURIComponent(searchKeyword));
+          fetchResults(searchKeyword);
+        }
+      });
 
     const handleInputChange = (event) => {
         setKeyword(event.target.value);
@@ -31,7 +43,7 @@ const SearchBar = ({fetchResults}) => {
         
  />
           <i className="bi bi-search position-absolute
-                       wd-nudge-up clickable" onClick={() => handleSearch(keyword)}></i>
+                       wd-nudge-up clickable" onClick={handleSearch}></i>
         </div>
     );
 }
