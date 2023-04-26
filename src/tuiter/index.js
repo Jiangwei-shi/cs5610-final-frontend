@@ -7,14 +7,20 @@ import HomeComponent from "./home";
 import whoReducer
   from "./reducers/who-reducer";
 import tuitsReducer from "./tuits/tuits-reducer";
+import resultsReducer from "./reducers/search-reducer";
 import { configureStore }
   from '@reduxjs/toolkit';
 import {Provider} from "react-redux";
 import ProfileComponent from "./profile";
-import profileReducer from "./reducers/profile-reducer";
+import AuthReducer from "./reducers/auth-reducer";
 import EditProfile from "./edit-profile";
+import LoginScreen from "./screens/login-screen";
+import SearchScreen from "./search/search-screen";
+
+
+
 const store = configureStore(
-  {reducer: {who: whoReducer, tuitsData: tuitsReducer, profile: profileReducer}});
+  {reducer: {who: whoReducer, tuitsData: tuitsReducer, currentUser: AuthReducer, results: resultsReducer}});
 
 function Tuiter() {
   return (
@@ -26,10 +32,13 @@ function Tuiter() {
         <div className="col-10 col-md-10 col-lg-7 col-xl-6"
              style={{"position": "relative"}}>
           <Routes>
+            <Route path="tuiter"    element={null}/>
             <Route path="home"    element={<HomeComponent/>}/>
             <Route path="explore" element={<ExploreComponent/>}/>
             <Route path="profile" element={<ProfileComponent/>}/>
             <Route path="edit-profile" element={<EditProfile/>}/>
+            <Route path="login"  element={<LoginScreen />} />
+            <Route path="search" element={<SearchScreen />}/>
           </Routes>
         </div>
         <div className="d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4">

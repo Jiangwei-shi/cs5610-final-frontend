@@ -11,7 +11,8 @@ import {
   faList,
   faUser,
   faEllipsisH,
-  faTag
+  faTag,
+  faMagnifyingGlass
 } from "@fortawesome/free-solid-svg-icons";
 
 const NavigationSidebar = () => {
@@ -20,7 +21,12 @@ const NavigationSidebar = () => {
   const active = paths[2];
   return (
     <div className="list-group">
-      <a className="list-group-item">Tuiter</a>
+      {/*<a className="list-group-item">Tuiter</a>*/}
+      <Link to="/tuiter/tuiter" className={`list-group-item ${active === 'tuiter'?'active':''}`}>
+        <div className="row">
+          <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col">tuiter</div>
+        </div>
+      </Link>
       <Link to="/tuiter/home" className={`list-group-item ${active === 'home'?'active':''}`}>
         <div className="row">
           <div className="col-1"><FontAwesomeIcon icon={faHome} size={"lg"}/></div>
@@ -40,13 +46,13 @@ const NavigationSidebar = () => {
           <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col ms-3">Labs</div>
         </div>
       </a>
-      <a className={`list-group-item
-                    ${active === 'notifications'?'active':''}`}>
+      <Link to="/tuiter/search" className={`list-group-item
+                    ${active === 'search'?'active':''}`}>
         <div className="row">
-          <div className="col-1"><FontAwesomeIcon icon={faBell} size={"lg"}/></div>
-          <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col ms-3">Notifications</div>
+          <div className="col-1"><FontAwesomeIcon icon={faMagnifyingGlass} size={"lg"}/></div>
+          <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col ms-3">Search</div>
         </div>
-      </a>
+      </Link>
       <a className={`list-group-item
                     ${active === 'messages'?'active':''}`}>
         <div className="row">
@@ -74,13 +80,13 @@ const NavigationSidebar = () => {
           <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col ms-3">Profile</div>
         </div>
       </Link>
-      <a className={`list-group-item
-                    ${active === 'more'?'active':''}`}>
+      <Link to="/tuiter/login" className={`list-group-item ${active === 'login'?'active':''}`}>
         <div className="row">
-          <div className="col-1"><FontAwesomeIcon icon={faEllipsisH} size={"lg"}/></div>
-          <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col ms-3">More</div>
+          <div className="col-1"><FontAwesomeIcon icon={faUser} size={"lg"}/></div>
+          <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col ms-3">login</div>
         </div>
-      </a>
+      </Link>
+
     </div>
   );
 };
