@@ -17,7 +17,7 @@ const ResultItem = ({result}) => {
               <b className="me-2">{result.name}</b>
               <div className="d-flex align-items-center">
                 <StarRating rating={result.rating}/>
-                <span className='ms-2' style={{color: 'gray', fontSize: 'smaller'}}>{result.review_count} reviews</span>
+                <span className='ms-2' style={{color: 'gray', fontSize: 'smaller'}}>{result.review_count} yelp reviews</span>
               </div>
             </div>
             <i className="bi bi-arrow-right float-end clickable"

@@ -1,22 +1,20 @@
-import { useState } from "react";
-import { searchYelp } from "../../services/search-service";
+import { useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import { fetchResults } from "../../actions/search-action";
 
 const SearchBar = ({fetchResults}) => {
     const [keyword, setKeyword] = useState();
 
-    const handleSearch = (keyword) => {
-        // searchYelp(keyword)
-        // .then((data) => {
-        //     console.log(data);
-        //     // Handle the data here
-        // })
-        // .catch((error) => {
-        //     console.error(error);
-        //     // Handle the error here
-        // });
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchKeyword = urlParams.get('keyword');
+        if (searchKeyword) {
+            setKeyword(decodeURIComponent(searchKeyword));
+            fetchResults(searchKeyword);
+        }
+    }, []);
 
+    const handleSearch = (keyword) => {
         fetchResults(keyword);
     };
 
