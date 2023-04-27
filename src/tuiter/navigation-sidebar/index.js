@@ -11,7 +11,8 @@ import {
   faList,
   faUser,
   faEllipsisH,
-  faTag
+  faTag,
+  faMagnifyingGlass
 } from "@fortawesome/free-solid-svg-icons";
 
 const NavigationSidebar = () => {
@@ -45,13 +46,13 @@ const NavigationSidebar = () => {
           <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col ms-3">Labs</div>
         </div>
       </a>
-      <a className={`list-group-item
-                    ${active === 'notifications'?'active':''}`}>
+      <Link to="/tuiter/search" className={`list-group-item
+                    ${active === 'search'?'active':''}`}>
         <div className="row">
-          <div className="col-1"><FontAwesomeIcon icon={faBell} size={"lg"}/></div>
-          <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col ms-3">Notifications</div>
+          <div className="col-1"><FontAwesomeIcon icon={faMagnifyingGlass} size={"lg"}/></div>
+          <div className="d-done d-sm-none d-md-none d-lg-none d-xl-block col ms-3">Search</div>
         </div>
-      </a>
+      </Link>
       <a className={`list-group-item
                     ${active === 'messages'?'active':''}`}>
         <div className="row">

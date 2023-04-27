@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "user": {
+      "name": "John Doe",
+      "avatar": "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+    },
+    "rating": 4.5,
+    "time": "2022-04-22",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "likes": 2,
+    "dislikes": 1,
+    "bookmarks": 1
+  },
+  {
+    "id": 2,
+    "user": {
+      "name": "Jane Smith",
+      "avatar": "https://www.gravatar.com/avatar/11111111111111111111111111111111?d=mp&f=y"
+    },
+    "rating": 3.5,
+    "time": "2022-04-20",
+    "text": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+    "likes": 0,
+    "dislikes": 2,
+    "bookmarks": 3
+  }
+]
