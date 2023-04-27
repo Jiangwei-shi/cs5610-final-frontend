@@ -15,6 +15,7 @@ import EditProfile from './edit-profile';
 import LoginScreen from './screens/login-screen';
 import SearchScreen from './search/search-screen';
 import DetailScreen from './details/detail-screen';
+import WriteReview from './details/write-review';
 
 const store = configureStore({
   reducer: {
@@ -45,6 +46,7 @@ function Tuiter() {
             <Route path='login' element={<LoginScreen />} />
             <Route path='search' element={<SearchScreen />} />
             <Route path='detail' element={<DetailScreen />} />
+            <Route path='write-review' element={<WriteReview />} />
           </Routes>
         </div>
         <div className='d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4'>

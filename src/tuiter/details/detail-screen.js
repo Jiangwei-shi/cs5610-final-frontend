@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ReviewList from './review-list';
 import ItemDetail from './yelp-detail';
 import reviews from './reviews';
@@ -11,9 +12,15 @@ const DetailScreen = () => {
         <ItemDetail item={item} />
       </div>
       <div className='write-a-review'>
-        <button className='rounded-pill btn btn-primary float-end mt-2 ps-3 pe-3 fw-bold'>
+        {/* <button className='rounded-pill btn btn-primary float-end mt-2 ps-3 pe-3 fw-bold'>
           Write a review
-        </button>
+        </button> */}
+        <Link
+          to='/write-review'
+          className='rounded-pill btn btn-primary float-end mt-2 ps-3 pe-3 fw-bold'
+        >
+          Write a review
+        </Link>
       </div>
       <div className='review-list'>
         <ReviewList reviews={reviews} />
