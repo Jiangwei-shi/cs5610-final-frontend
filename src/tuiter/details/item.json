@@ -1,0 +1,7 @@
+{
+  "name": "Example Item",
+  "reviewNumber": 10,
+  "category": ["Category 1", "Category 2", "Category 3"],
+  "phone": "555-555-5555",
+  "isOpen": true
+}
