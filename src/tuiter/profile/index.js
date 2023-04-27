@@ -3,12 +3,11 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { profileThunk, logoutThunk } from "../../services/auth-thunks";
-import { setProfileUpdated } from "../reducers/auth-reducer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 function ProfileScreen() {
-  const { currentUser, profileUpdated } = useSelector((state) => state.currentUser);
+  const { currentUser } = useSelector((state) => state.currentUser);
   const localUser = JSON.parse(localStorage.getItem("currentUser"));
   const [profile, setProfile] = useState(currentUser || localUser);
   const dispatch = useDispatch();
@@ -30,11 +29,8 @@ function ProfileScreen() {
       const { payload } = await dispatch(profileThunk());
       setProfile(payload);
     };
-    if (profileUpdated) {
       fetchProfile();
-      dispatch(setProfileUpdated(false));
-    }
-  }, [dispatch, currentUser, profileUpdated]);
+  }, [dispatch, currentUser]);
 
   if (!currentUser) {
     return <div>你无权查看此页面，请先登录</div>;

@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import * as userService from './auth-service'
-import { updateCurrentUser } from "../tuiter/reducers/auth-reducer";
 
 export const registerThunk = createAsyncThunk(
   "users/register",
@@ -38,9 +37,6 @@ export const updateUserThunk = createAsyncThunk(
   async (user, thunkAPI) => {
     const response = await userService.updateUserService(user);
     const updatedUser = response.data;
-
-    thunkAPI.dispatch(updateCurrentUser(updatedUser));
-
     return updatedUser;
   }
 );

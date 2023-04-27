@@ -11,12 +11,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState: { currentUser: null, profileUpdated: false },
   reducers: {
-    updateCurrentUser: (state, action) => {
-      state.currentUser = action.payload;
-    },
-    setProfileUpdated: (state, action) => {
-      state.profileUpdated = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -35,6 +29,4 @@ const authSlice = createSlice({
       .addCase(registerThunk.fulfilled, (state, { payload }) => {});
   },
 });
-
-export const { updateCurrentUser, setProfileUpdated } = authSlice.actions;
 export default authSlice.reducer;

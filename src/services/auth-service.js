@@ -35,7 +35,6 @@ export const profile = async () => {
 };
 
 export const updateUserService = async (user) => {
-  console.log(user._id);
   const response = await api.put(`${USERS_API}/${user._id}`, user);
   return response.data;
 };

@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import { updateUserThunk } from '../../services/auth-thunks'
-import { setProfileUpdated } from "../reducers/auth-reducer";
-
 const EditProfile = () => {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const localUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -16,10 +14,8 @@ const EditProfile = () => {
 
   const handleSave = async () => {
     await dispatch(updateUserThunk(profile));
-    dispatch(setProfileUpdated(true)); // 设置 profileUpdated 为 true
     sessionStorage.setItem("currentUser", JSON.stringify(profile));
     navigate("/profile");
-    dispatch(setProfileUpdated(false)); // 设置 profileUpdated 为 false
   };
 
   useEffect(() => {
