@@ -1,18 +1,20 @@
-import React, {useState} from "react";
-import {useDispatch} from "react-redux";
-import {createTuitThunk}
-  from "../../services/tuits-thunks";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createTuitThunk } from "../../services/tuits-thunks";
 
 const WhatsHappening = () => {
   const [whatsHappening, setWhatsHappening] = useState('');
   const dispatch = useDispatch();
 
   const tuitClickHandler = () => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     const newTuit = {
-      tuit: whatsHappening
-    }
+      tuit: whatsHappening,
+      uid: currentUser ? currentUser._id : null,
+    };
+    console.log(newTuit);
     dispatch(createTuitThunk(newTuit));
-  }
+  };
   return (
     <div className="row">
       <div className="col-auto">

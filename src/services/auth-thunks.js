@@ -1,18 +1,20 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import * as userService from './auth-service'
+import { updateCurrentUser } from "../tuiter/reducers/auth-reducer";
 
 export const registerThunk = createAsyncThunk(
   "users/register",
   async (user) => {
-    const registeredUser = await userService.register(user);
-    return registeredUser;
+    return await userService.register(user);
   }
 );
 
 export const loginThunk = createAsyncThunk(
   "users/login",
   async (credentials) => {
-    return await userService.login(credentials);
+    const loggedInUser = await userService.login(credentials);
+    localStorage.setItem("currentUser", JSON.stringify(loggedInUser));
+    return loggedInUser;
   }
 );
 
@@ -27,14 +29,19 @@ export const logoutThunk = createAsyncThunk(
   "users/logout",
   async () => {
     await userService.logout();
+    localStorage.removeItem("currentUser");
   }
 );
 
 export const updateUserThunk = createAsyncThunk(
   "users/updateUser",
-  async (user) => {
-    await userService.updateUserService(user);
-    return user;
+  async (user, thunkAPI) => {
+    const response = await userService.updateUserService(user);
+    const updatedUser = response.data;
+
+    thunkAPI.dispatch(updateCurrentUser(updatedUser));
+
+    return updatedUser;
   }
 );
 

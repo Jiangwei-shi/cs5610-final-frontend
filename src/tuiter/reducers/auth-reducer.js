@@ -9,8 +9,15 @@ import {
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { currentUser: null },
-  reducers: {},
+  initialState: { currentUser: null, profileUpdated: false },
+  reducers: {
+    updateCurrentUser: (state, action) => {
+      state.currentUser = action.payload;
+    },
+    setProfileUpdated: (state, action) => {
+      state.profileUpdated = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loginThunk.fulfilled, (state, { payload }) => {
@@ -29,4 +36,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { updateCurrentUser, setProfileUpdated } = authSlice.actions;
 export default authSlice.reducer;

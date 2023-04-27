@@ -4,23 +4,27 @@ import React, { useEffect, useState } from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import { updateUserThunk } from '../../services/auth-thunks'
+import { setProfileUpdated } from "../reducers/auth-reducer";
 
 const EditProfile = () => {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
-  const [profile, setProfile] = useState(currentUser);
+  const localUser = JSON.parse(sessionStorage.getItem("currentUser"));
+  const [profile, setProfile] = useState(currentUser || localUser);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSave = async () => {
-    console.log(profile);
     await dispatch(updateUserThunk(profile));
+    dispatch(setProfileUpdated(true)); // 设置 profileUpdated 为 true
+    sessionStorage.setItem("currentUser", JSON.stringify(profile));
+    navigate("/profile");
+    dispatch(setProfileUpdated(false)); // 设置 profileUpdated 为 false
   };
 
   useEffect(() => {
     setProfile(profile);
   }, [currentUser]);
-
 
   return(
     <div className="container">
@@ -85,8 +89,8 @@ const EditProfile = () => {
 
           <form className="form-floating">
             <input type="text" className="form-control"
-                   placeholder="1/1/2000" value={profile.dateOfBirth}
-                   onChange={(e) => setProfile({...profile, dateOfBirth: e.target.value})}
+                   placeholder="1/1/2000" value={profile.dob}
+                   onChange={(e) => setProfile({...profile, dob: e.target.value})}
             />
             <label>Birth date</label>
           </form>
