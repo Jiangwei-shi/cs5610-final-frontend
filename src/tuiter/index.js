@@ -12,7 +12,7 @@ import { Provider } from 'react-redux';
 import ProfileComponent from './profile';
 import AuthReducer from './reducers/auth-reducer';
 import EditProfile from './edit-profile';
-import LoginScreen from './screens/login-screen';
+import LoginScreen from './loginAndRegister/login-screen';
 import SearchScreen from './search/search-screen';
 import DetailScreen from './details/detail-screen';
 import WriteReview from './details/write-review';
