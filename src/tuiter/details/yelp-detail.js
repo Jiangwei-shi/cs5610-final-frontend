@@ -1,15 +1,27 @@
 import React from 'react';
 
 const ItemDetail = ({ item }) => {
-  const { name, reviewNumber, category, phone, isOpen } = item;
+  console.log(item);
+  const {
+    name,
+    review_count,
+    categories,
+    display_phone,
+    is_closed,
+    image_url,
+  } = item;
+
+  // Create an array of category titles.
+  const categoryTitles = categories.map(category => category.title);
 
   return (
     <div className='row'>
       <div className='col-12 col-md-4'>
         <img
-          src='https://via.placeholder.com/150'
+          src={image_url}
           alt=''
           className='img-thumbnail'
+          style={{ width: '150px', height: '150px' }}
         />
       </div>
       <div className='col-12 col-md-8'>
@@ -18,20 +30,20 @@ const ItemDetail = ({ item }) => {
             <h4>{name}</h4>
           </div>
           <div className='col-12'>
-            <span style={{ color: 'gray' }}>{reviewNumber} reviews</span>
+            <span style={{ color: 'gray' }}>{review_count} reviews</span>
           </div>
           <div className='col-12'>
-            <span>{category.join(', ')}</span>
+            <span>{categoryTitles.join(', ')}</span>
           </div>
           <div className='col-12'>
-            <span>{phone}</span>
+            <span>{display_phone}</span>
           </div>
           <div className='col-12'>
             <p>
-              {isOpen ? (
-                <span className='text-success'>Open</span>
-              ) : (
+              {is_closed ? (
                 <span className='text-danger'>Closed</span>
+              ) : (
+                <span className='text-success'>open</span>
               )}
             </p>
           </div>

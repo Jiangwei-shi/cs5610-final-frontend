@@ -9,6 +9,7 @@ import {
 import './index.css';
 
 const ReviewItem = ({ review }) => {
+  console.log(review);
   const { user, rating, time, text, likes, dislikes, bookmarks } = review;
   const avatar = user.avatar;
 

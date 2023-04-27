@@ -1,13 +1,15 @@
 // Component for showing result item.
 import StarRating from '../rating/star-rating';
-import { Navigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ResultItem = ({ result }) => {
-  console.log(result.image);
+  console.log(result);
 
-  const handleArrowClick = () => {
-    return <Navigate to={`/detail/${result.id}`} />;
-  };
+  // const handleArrowClick = () => {
+
+  //   return <Navigate to={`/detail/${result._id}`} />;
+  // };
 
   return (
     <div className='list-group-item bg-transparent'>
@@ -29,10 +31,14 @@ const ResultItem = ({ result }) => {
                 </span>
               </div>
             </div>
-            <i
+            {/* <i
               className='bi bi-arrow-right float-end clickable'
               onClick={handleArrowClick}
-            ></i>
+            ></i> */}
+            <Link
+              to={`/detail/${result.id}`}
+              className='bi bi-arrow-right float-end clickable'
+            ></Link>
           </div>
           <div>{result.display_phone}</div>
         </div>
