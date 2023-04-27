@@ -1,0 +1,12 @@
+{
+  "user": {
+    "name": "John Smith",
+    "avatar": ""
+  },
+  "rating": 4,
+  "time": "2022-04-26",
+  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin volutpat auctor mauris, in dapibus mauris venenatis sed.",
+  "likes": 10,
+  "dislikes": 2,
+  "bookmarks": 5
+}
