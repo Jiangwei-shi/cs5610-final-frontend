@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Rating from 'react-rating-stars-component';
 
 const WriteReview = () => {
-  const [rating, setRating] = useState(3);
+  const [rating, setRating] = useState(5);
   const [reviewText, setReviewText] = useState('');
 
   const handleRatingChange = newRating => {
