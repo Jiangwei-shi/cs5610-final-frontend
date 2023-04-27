@@ -22,6 +22,7 @@ const WhatsHappening = () => {
     console.log(newTuit);
     dispatch(createTuitThunk(newTuit));
   };
+  
   return (
     <div className="row">
       <div className="col-auto">
