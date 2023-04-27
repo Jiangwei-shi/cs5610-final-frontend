@@ -9,8 +9,9 @@ import {
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { currentUser: null },
-  reducers: {},
+  initialState: { currentUser: null, profileUpdated: false },
+  reducers: {
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loginThunk.fulfilled, (state, { payload }) => {
@@ -28,5 +29,4 @@ const authSlice = createSlice({
       .addCase(registerThunk.fulfilled, (state, { payload }) => {});
   },
 });
-
 export default authSlice.reducer;
