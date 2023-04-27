@@ -12,11 +12,12 @@ import { configureStore }
 import {Provider} from "react-redux";
 import ProfileComponent from "./profile";
 import AuthReducer from "./reducers/auth-reducer";
+import usersReducers from './reducers/users-reducer'
 import EditProfile from "./edit-profile";
 import LoginScreen from "./loginAndRegister/login-screen";
 import RegisterScreen from './loginAndRegister/register-screen'
 const store = configureStore(
-  {reducer: {who: whoReducer, tuitsData: tuitsReducer, currentUser: AuthReducer}});
+  {reducer: {who: usersReducers, tuitsData: tuitsReducer, currentUser: AuthReducer}});
 
 function Tuiter() {
   return (

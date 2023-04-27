@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createTuitThunk } from "../../services/tuits-thunks";
+import { useNavigate } from 'react-router'
 
 const WhatsHappening = () => {
   const [whatsHappening, setWhatsHappening] = useState('');
   const dispatch = useDispatch();
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const navigate = useNavigate();
 
   const tuitClickHandler = () => {
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
     const newTuit = {
       tuit: whatsHappening,
       uid: currentUser ? currentUser._id : null,
+      image: currentUser ? currentUser.picture: null,
     };
     console.log(newTuit);
     dispatch(createTuitThunk(newTuit));
@@ -18,7 +25,7 @@ const WhatsHappening = () => {
   return (
     <div className="row">
       <div className="col-auto">
-        <img src="/images/nasa.png" width={60} />
+        <img className="rounded-pill user-image" src={currentUser ?`/images/${currentUser.picture}` : "/images/default.png"} width={60} />
       </div>
 
       <div className="col-10">
