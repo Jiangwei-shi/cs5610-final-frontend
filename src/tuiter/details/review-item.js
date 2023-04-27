@@ -6,6 +6,7 @@ import {
   faHeart,
   faThumbsDown,
 } from '@fortawesome/free-solid-svg-icons';
+import './index.css';
 
 const ReviewItem = ({ review }) => {
   const { user, rating, time, text, likes, dislikes, bookmarks } = review;
@@ -15,7 +16,7 @@ const ReviewItem = ({ review }) => {
     <div className='review-avatar'>
       <div>
         <div className='review-item col-lg-6'>
-          <img src={avatar} />
+          <img src={avatar} className='rounded-pill user-image me-2' />
           <span>{user.name}</span>
         </div>
         <div className='review-rating'>

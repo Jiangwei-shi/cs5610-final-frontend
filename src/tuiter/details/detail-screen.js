@@ -1,9 +1,9 @@
 import React from 'react';
-import ReviewItem from './review-item';
-import review from './review.json';
+import ReviewList from './review-list';
+import reviews from './reviews';
 
 const DetailScreen = () => {
-  return <ReviewItem review={review} />;
+  return <ReviewList reviews={reviews} />;
 };
 
 export default DetailScreen;
