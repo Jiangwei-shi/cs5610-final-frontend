@@ -1,18 +1,18 @@
 import './index.css';
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router';
 import {
   profileThunk,
   logoutThunk,
   findUserByIdThunk,
-} from '../../services/auth-thunks'
+} from '../../services/auth-thunks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import {
   getUserFollowersThunk,
   getUserFollowingsThunk,
-} from '../../services/follow-thunks'
+} from '../../services/follow-thunks';
 
 function ProfileScreen() {
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -22,8 +22,19 @@ function ProfileScreen() {
   const navigate = useNavigate();
   const [showFollowers, setShowFollowers] = useState(false);
   const [showFollowing, setShowFollowing] = useState(false);
-  const followers = useSelector(state => state.currentUser.currentUser.followers);
-  const followings = useSelector(state => state.currentUser.currentUser.followings);
+  // const followers = useSelector(
+  //   state => state.currentUser.currentUser.followers,
+  // );
+  // const followings = useSelector(
+  //   state => state.currentUser.currentUser.followings,
+  // );
+  const followers = useSelector(
+    state => state.currentUser.currentUser?.followers || [],
+  );
+  const followings = useSelector(
+    state => state.currentUser.currentUser?.followings || [],
+  );
+
   const [followersUsernames, setFollowersUsernames] = useState([]);
   const [followingsUsernames, setFollowingsUsernames] = useState([]);
   const [isFetchingProfile, setIsFetchingProfile] = useState(false);
@@ -54,19 +65,23 @@ function ProfileScreen() {
 
   useEffect(() => {
     const fetchUsernames = async () => {
-      const followersUsernamesPromises = followers.map(async (userId) => {
+      const followersUsernamesPromises = followers.map(async userId => {
         const userAction = await dispatch(findUserByIdThunk(userId));
         const user = userAction.payload;
         return user.username;
       });
-      const followingsUsernamesPromises = followings.map(async (userId) => {
+      const followingsUsernamesPromises = followings.map(async userId => {
         const userAction = await dispatch(findUserByIdThunk(userId));
         const user = userAction.payload;
         return user.username;
       });
 
-      const fetchedFollowersUsernames = await Promise.all(followersUsernamesPromises);
-      const fetchedFollowingsUsernames = await Promise.all(followingsUsernamesPromises);
+      const fetchedFollowersUsernames = await Promise.all(
+        followersUsernamesPromises,
+      );
+      const fetchedFollowingsUsernames = await Promise.all(
+        followingsUsernamesPromises,
+      );
 
       setFollowersUsernames(fetchedFollowersUsernames);
       setFollowingsUsernames(fetchedFollowingsUsernames);
@@ -78,8 +93,8 @@ function ProfileScreen() {
   }, [followers, followings, dispatch]);
 
   if (!currentUser) {
-    alert("you must login first");
-    navigate("/login");
+    alert('you must login first');
+    navigate('/login');
     return;
   }
 
@@ -183,25 +198,36 @@ function ProfileScreen() {
             </div>
           </div>
 
-          <div className="d-flex justify-content-start">
-            <div className="flex-box">
-              <button className="btn btn-link text-secondary" onClick={() => { setShowFollowing(!showFollowing); setShowFollowers(false); }}>Following</button>
+          <div className='d-flex justify-content-start'>
+            <div className='flex-box'>
+              <button
+                className='btn btn-link text-secondary'
+                onClick={() => {
+                  setShowFollowing(!showFollowing);
+                  setShowFollowers(false);
+                }}
+              >
+                Following
+              </button>
             </div>
-            <div className="flex-box ms-3">
-              <button className="btn btn-link text-secondary" onClick={() => { setShowFollowers(!showFollowers); setShowFollowing(false); }}>Followers</button>
+            <div className='flex-box ms-3'>
+              <button
+                className='btn btn-link text-secondary'
+                onClick={() => {
+                  setShowFollowers(!showFollowers);
+                  setShowFollowing(false);
+                }}
+              >
+                Followers
+              </button>
             </div>
           </div>
           {showFollowing && (
-            <div className="following-list">
-              {renderFollowingList()}
-            </div>
+            <div className='following-list'>{renderFollowingList()}</div>
           )}
           {showFollowers && (
-            <div className="followers-list">
-              {renderFollowersList()}
-            </div>
+            <div className='followers-list'>{renderFollowersList()}</div>
           )}
-
         </div>
         {isCurrentUserProfile && (
           <div>
