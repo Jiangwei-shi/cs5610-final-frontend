@@ -1,25 +1,89 @@
 import './index.css';
-import React, { useEffect } from "react";
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
-import { profileThunk, logoutThunk } from "../../services/auth-thunks";
+import {
+  profileThunk,
+  logoutThunk,
+  findUserByIdThunk,
+} from '../../services/auth-thunks'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import {
+  getUserFollowersThunk,
+  getUserFollowingsThunk,
+} from '../../services/follow-thunks'
 
 function ProfileScreen() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showFollowers, setShowFollowers] = useState(false);
+  const [showFollowing, setShowFollowing] = useState(false);
+  const followers = useSelector(state => state.currentUser.currentUser.followers);
+  const followings = useSelector(state => state.currentUser.currentUser.followings);
+  const [followersUsernames, setFollowersUsernames] = useState([]);
+  const [followingsUsernames, setFollowingsUsernames] = useState([]);
 
   useEffect(() => {
-    console.log(currentUser);
-
     dispatch(profileThunk());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (currentUser) {
+      dispatch(getUserFollowersThunk(currentUser._id));
+      dispatch(getUserFollowingsThunk(currentUser._id));
+    }
+  }, [currentUser, dispatch]);
+
+  useEffect(() => {
+    const fetchUsernames = async () => {
+      const followersUsernamesPromises = followers.map(async (userId) => {
+        const userAction = await dispatch(findUserByIdThunk(userId));
+        const user = userAction.payload;
+        return user.username;
+      });
+      const followingsUsernamesPromises = followings.map(async (userId) => {
+        const userAction = await dispatch(findUserByIdThunk(userId));
+        const user = userAction.payload;
+        return user.username;
+      });
+
+      const fetchedFollowersUsernames = await Promise.all(followersUsernamesPromises);
+      const fetchedFollowingsUsernames = await Promise.all(followingsUsernamesPromises);
+
+      setFollowersUsernames(fetchedFollowersUsernames);
+      setFollowingsUsernames(fetchedFollowingsUsernames);
+    };
+
+    if (followers.length > 0 || followings.length > 0) {
+      fetchUsernames();
+    }
+  }, [followers, followings, dispatch]);
 
   if (!currentUser) {
     return <div>你无权查看此页面，请先登录</div>;
   }
+
+  const renderFollowingList = () => {
+    return (
+      <ul>
+        {followingsUsernames.map((username, index) => (
+          <li key={followings[index]}>{username}</li>
+        ))}
+      </ul>
+    );
+  };
+
+  const renderFollowersList = () => {
+    return (
+      <ul>
+        {followersUsernames.map((username, index) => (
+          <li key={followers[index]}>{username}</li>
+        ))}
+      </ul>
+    );
+  };
 
   return (
     <div className="container">
@@ -66,12 +130,22 @@ function ProfileScreen() {
 
           <div className="d-flex justify-content-start">
             <div className="flex-box">
-              <span className="text-secondary"> Following</span>
+              <button className="btn btn-link text-secondary" onClick={() => { setShowFollowing(!showFollowing); setShowFollowers(false); }}>Following</button>
             </div>
             <div className="flex-box ms-3">
-              <span className="text-secondary"> Followers</span>
+              <button className="btn btn-link text-secondary" onClick={() => { setShowFollowers(!showFollowers); setShowFollowing(false); }}>Followers</button>
             </div>
           </div>
+          {showFollowing && (
+            <div className="following-list">
+              {renderFollowingList()}
+            </div>
+          )}
+          {showFollowers && (
+            <div className="followers-list">
+              {renderFollowersList()}
+            </div>
+          )}
         </div>
         <button
           onClick={() => {
