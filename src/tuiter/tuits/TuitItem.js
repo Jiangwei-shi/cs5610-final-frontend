@@ -25,6 +25,8 @@ const TuitItem = (
   }
 ) => {
   const dispatch = useDispatch();
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  console.log(currentUser);
   const deleteTuitHandler = (id) => {
     dispatch(deleteTuitThunk(id));
   }
@@ -41,8 +43,10 @@ const TuitItem = (
               <b>{post.username}</b><FontAwesomeIcon icon={faCheckCircle} className="ms-1 me-2 text-primary"/>
               <span className="text-dark">@ {post.username} · {post.time}</span>
             </div>
-            <i className="bi bi-x-lg float-end clickable"
-               onClick={() => deleteTuitHandler(post._id)}></i>
+            {currentUser && currentUser.role === 'admin' && (
+              <i className="bi bi-x-lg float-end clickable"
+                 onClick={() => deleteTuitHandler(post._id)}></i>
+            )}
           </div>
           <div>{post.tuit}</div>
           <TuitStats key={post._id} post={post}/>
