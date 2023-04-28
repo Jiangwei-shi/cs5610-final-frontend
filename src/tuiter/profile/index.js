@@ -5,13 +5,12 @@ import { useParams, useNavigate } from 'react-router';
 import { profileThunk, logoutThunk } from '../../services/auth-thunks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import * as userService from '../../services/auth-service';
-import axios from 'axios';
 
 function ProfileScreen() {
-  const { currentUser } = useSelector(state => state.currentUser);
-  const localUser = JSON.parse(localStorage.getItem('currentUser'));
-  const [profile, setProfile] = useState(currentUser || localUser);
+  // const { currentUser } = useSelector(state => state.currentUser);
+  // const localUser = JSON.parse(localStorage.getItem('currentUser'));
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const [profile, setProfile] = useState({});
   const { user_id } = useParams(); // Get user_id from URL
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,28 +21,47 @@ function ProfileScreen() {
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
   };
 
-  useEffect(() => {
-    if (currentUser) {
-      updateLocalStorage(currentUser);
-      setProfile(currentUser);
-    }
-  }, [currentUser]);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     updateLocalStorage(currentUser);
+  //     // setProfile(currentUser);
+  //   }
+  // }, [currentUser]);
+
+  // useEffect(() => {
+  //   const fetchProfile = async () => {
+  //     setIsFetchingProfile(true);
+
+  //     if (user_id) {
+  //       const { payload } = await dispatch(profileThunk(user_id)); // Pass user_id to the profileThunk
+  //       setProfile(payload);
+  //     } else {
+  //       setProfile(currentUser || localUser);
+  //     }
+  //   };
+  //   fetchProfile();
+  // }, [dispatch, user_id, currentUser, localUser]); // Add user_id as a dependency
 
   useEffect(() => {
     const fetchProfile = async () => {
       setIsFetchingProfile(true);
-      const { payload } = await dispatch(profileThunk(user_id)); // Pass user_id to the profileThunk
-      setProfile(payload);
+
+      if (user_id && (!currentUser || currentUser._id !== user_id)) {
+        const { payload } = await dispatch(profileThunk(user_id));
+        setProfile(payload);
+      } else {
+        setProfile(currentUser);
+      }
+
+      setIsFetchingProfile(false);
     };
+
     fetchProfile();
-  }, [dispatch, user_id]); // Add user_id as a dependency
+  }, [dispatch, user_id]);
 
   if (!currentUser) {
     return <div>你无权查看此页面，请先登录</div>;
   }
-
-  // const isCurrentUserProfile =
-  //   !user_id || (currentUser && currentUser._id === user_id);
 
   console.log(currentUser._id);
   console.log('profile._id' + profile._id);
@@ -79,12 +97,20 @@ function ProfileScreen() {
         <div className='user-top-part ps-4 pe-4 pb-4'>
           <div className='d-flex justify-content-between'>
             <div>
-              <img
+              {/* <img
                 className='user-img rounded-pill'
                 src={
                   currentUser
                     ? `/images/${currentUser.picture}`
                     : '/images/default.png'
+                }
+              /> */}
+              <img
+                className='user-img rounded-pill'
+                src={
+                  isCurrentUserProfile
+                    ? `/images/${currentUser.picture}`
+                    : `/images/${profile.picture}`
                 }
               />
             </div>
