@@ -11,13 +11,20 @@ const WhatsHappening = () => {
 
   const tuitClickHandler = () => {
     if (!currentUser) {
+      alert("you must login first, then you can post a tuit");
       navigate("/login");
       return;
     }
+
+    const now = new Date();
+    const formattedDate = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
+
+
     const newTuit = {
       tuit: whatsHappening,
       uid: currentUser ? currentUser._id : null,
-      image: currentUser ? currentUser.picture: null,
+      image: currentUser.picture ? currentUser.picture: 'default.png',
+      time: formattedDate
     };
     console.log(newTuit);
     dispatch(createTuitThunk(newTuit));
@@ -26,7 +33,17 @@ const WhatsHappening = () => {
   return (
     <div className="row">
       <div className="col-auto">
-        <img className="rounded-pill user-image" src={currentUser ?`/images/${currentUser.picture}` : "/images/default.png"} width={60} />
+        <img
+          className="rounded-pill user-image"
+          src={
+            currentUser
+              ? currentUser.picture
+                ? `/images/${currentUser.picture}`
+                : "/images/default.png"
+              : "/images/anonymous.png"
+          }
+          width={60}
+        />
       </div>
 
       <div className="col-10">
