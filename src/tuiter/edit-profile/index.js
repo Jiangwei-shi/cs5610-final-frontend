@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import { updateUserThunk } from '../../services/auth-thunks'
+import { setCurrentUser } from '../reducers/auth-reducer'
 const EditProfile = () => {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const localUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -14,7 +15,8 @@ const EditProfile = () => {
 
   const handleSave = async () => {
     await dispatch(updateUserThunk(profile));
-    sessionStorage.setItem("currentUser", JSON.stringify(profile));
+    localStorage.setItem("currentUser", JSON.stringify(profile));
+    dispatch(setCurrentUser(profile));
     navigate("/profile");
   };
 
@@ -39,11 +41,14 @@ const EditProfile = () => {
 
         <div className="list-group-item p-0">
           {/*<img className="img-fluid" src={`/images/${currentUser.bannerPicture}`}/>*/}
-          <img className="img-fluid" src={`/images/Elon_Mask.png`}/>
+          <img className="img-fluid" src={`/images/starship.jpg`}/>
         </div>
         <div className="user-top-part ps-4 pe-4 pb-4">
           <div>
-            <img className="user-img rounded-pill" src={`/images/Elon_Mask.png`}/>
+            <img className="user-img rounded-pill" src={
+              profile.picture
+              ? `/images/${profile.picture}`
+              : '/images/default.png'}/>
           </div>
           <br/>
 
@@ -91,9 +96,7 @@ const EditProfile = () => {
             <label>Birth date</label>
           </form>
           <br/>
-
         </div>
-
       </div>
     </div>
 

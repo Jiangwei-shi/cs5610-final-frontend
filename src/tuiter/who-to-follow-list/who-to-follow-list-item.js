@@ -27,6 +27,15 @@ const WhoToFollowListItem = ({ user }) => {
     }
   }, [currentUser, user]);
 
+  const toggleFollow = async () => {
+    if (!isFollowing) {
+      await dispatch(followUserThunk({ userId: currentUser._id, followUserId: user._id }));
+    } else {
+      await dispatch(unfollowUserThunk({ userId: currentUser._id, followUserId: user._id }));
+    }
+    setIsFollowing(!isFollowing);
+  };
+
   const handleFollowClick = async () => {
     if (!currentUser) {
       alert('you must login first, then you can follow others');
@@ -34,17 +43,7 @@ const WhoToFollowListItem = ({ user }) => {
       return;
     }
 
-    if (!isFollowing) {
-      await dispatch(
-        followUserThunk({ userId: currentUser._id, followUserId: user._id }),
-      );
-      setIsFollowing(true);
-    } else {
-      await dispatch(
-        unfollowUserThunk({ userId: currentUser._id, followUserId: user._id }),
-      );
-      setIsFollowing(false);
-    }
+    await toggleFollow();
   };
 
   return (

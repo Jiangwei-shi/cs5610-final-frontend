@@ -1,19 +1,31 @@
 import './index.css';
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router';
-import { profileThunk, logoutThunk } from '../../services/auth-thunks';
+import {
+  profileThunk,
+  logoutThunk,
+  findUserByIdThunk,
+} from '../../services/auth-thunks'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+  getUserFollowersThunk,
+  getUserFollowingsThunk,
+} from '../../services/follow-thunks'
 
 function ProfileScreen() {
-  // const { currentUser } = useSelector(state => state.currentUser);
-  // const localUser = JSON.parse(localStorage.getItem('currentUser'));
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
   const [profile, setProfile] = useState({});
   const { user_id } = useParams(); // Get user_id from URL
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showFollowers, setShowFollowers] = useState(false);
+  const [showFollowing, setShowFollowing] = useState(false);
+  const followers = useSelector(state => state.currentUser.currentUser.followers);
+  const followings = useSelector(state => state.currentUser.currentUser.followings);
+  const [followersUsernames, setFollowersUsernames] = useState([]);
+  const [followingsUsernames, setFollowingsUsernames] = useState([]);
   const [isFetchingProfile, setIsFetchingProfile] = useState(false);
 
   useEffect(() => {
@@ -33,18 +45,68 @@ function ProfileScreen() {
     fetchProfile();
   }, [dispatch, user_id]);
 
+  useEffect(() => {
+    if (currentUser) {
+      dispatch(getUserFollowersThunk(currentUser._id));
+      dispatch(getUserFollowingsThunk(currentUser._id));
+    }
+  }, [currentUser, dispatch]);
+
+  useEffect(() => {
+    const fetchUsernames = async () => {
+      const followersUsernamesPromises = followers.map(async (userId) => {
+        const userAction = await dispatch(findUserByIdThunk(userId));
+        const user = userAction.payload;
+        return user.username;
+      });
+      const followingsUsernamesPromises = followings.map(async (userId) => {
+        const userAction = await dispatch(findUserByIdThunk(userId));
+        const user = userAction.payload;
+        return user.username;
+      });
+
+      const fetchedFollowersUsernames = await Promise.all(followersUsernamesPromises);
+      const fetchedFollowingsUsernames = await Promise.all(followingsUsernamesPromises);
+
+      setFollowersUsernames(fetchedFollowersUsernames);
+      setFollowingsUsernames(fetchedFollowingsUsernames);
+    };
+
+    if (followers.length > 0 || followings.length > 0) {
+      fetchUsernames();
+    }
+  }, [followers, followings, dispatch]);
+
   if (!currentUser) {
-    return <div>你无权查看此页面，请先登录</div>;
+    alert("you must login first");
+    navigate("/login");
+    return;
   }
 
-  console.log(currentUser._id);
-  console.log('profile._id' + profile._id);
+  const renderFollowingList = () => {
+    return (
+      <ul>
+        {followingsUsernames.map((username, index) => (
+          <li key={followings[index]}>{username}</li>
+        ))}
+      </ul>
+    );
+  };
+
+  const renderFollowersList = () => {
+    return (
+      <ul>
+        {followersUsernames.map((username, index) => (
+          <li key={followers[index]}>{username}</li>
+        ))}
+      </ul>
+    );
+  };
+
   const isCurrentUserProfile =
     !user_id ||
     (currentUser && currentUser._id === profile._id) ||
     isFetchingProfile;
-
-  console.log(isCurrentUserProfile);
 
   return (
     <div className='container'>
@@ -72,22 +134,6 @@ function ProfileScreen() {
         <div className='user-top-part ps-4 pe-4 pb-4'>
           <div className='d-flex justify-content-between'>
             <div>
-              {/* <img
-                className='user-img rounded-pill'
-                src={
-                  currentUser
-                    ? `/images/${currentUser.picture}`
-                    : '/images/default.png'
-                }
-              /> */}
-              {/* <img
-                className='user-img rounded-pill'
-                src={
-                  isCurrentUserProfile
-                    ? `/images/${currentUser.picture}`
-                    : `/images/${profile.picture}`
-                }
-              /> */}
               <img
                 className='user-img rounded-pill'
                 src={
@@ -135,19 +181,27 @@ function ProfileScreen() {
               <i className='bi bi-balloon'></i>
               <span className='ms-1'>{`Born in ${profile.dob}`}</span>
             </div>
-            {/*<div className="flex-box ms-3"><i className="bi bi-calendar3"></i><span className="ms-1">{`Joined ${profile.createdAt}`}</span></div>*/}
           </div>
 
-          <div className='d-flex justify-content-start'>
-            <div className='flex-box'>
-              {/*<span className="fw-bold">{user.followingCount}</span>*/}
-              <span className='text-secondary'> Following</span>
+          <div className="d-flex justify-content-start">
+            <div className="flex-box">
+              <button className="btn btn-link text-secondary" onClick={() => { setShowFollowing(!showFollowing); setShowFollowers(false); }}>Following</button>
             </div>
-            <div className='flex-box ms-3'>
-              {/*<span className="fw-bold">{user.followersCount}</span>*/}
-              <span className='text-secondary'> Followers</span>
+            <div className="flex-box ms-3">
+              <button className="btn btn-link text-secondary" onClick={() => { setShowFollowers(!showFollowers); setShowFollowing(false); }}>Followers</button>
             </div>
           </div>
+          {showFollowing && (
+            <div className="following-list">
+              {renderFollowingList()}
+            </div>
+          )}
+          {showFollowers && (
+            <div className="followers-list">
+              {renderFollowersList()}
+            </div>
+          )}
+
         </div>
         {isCurrentUserProfile && (
           <div>

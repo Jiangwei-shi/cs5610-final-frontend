@@ -26,7 +26,6 @@ const WhatsHappening = () => {
       image: currentUser.picture ? currentUser.picture: 'default.png',
       time: formattedDate
     };
-    console.log(newTuit);
     dispatch(createTuitThunk(newTuit));
   };
   
