@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router';
 import HomeComponent from './home';
 import tuitsReducer from './tuits/tuits-reducer';
 import resultsReducer from './reducers/search-reducer';
+import userReducer from './reducers/user-reducer';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import ProfileComponent from './profile';
@@ -18,6 +19,7 @@ import WriteReview from './details/write-review';
 
 const store = configureStore({
   reducer: {
+    users: userReducer,
     usersData: AuthReducer,
     tuitsData: tuitsReducer,
     currentUser: AuthReducer,
