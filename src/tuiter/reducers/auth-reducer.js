@@ -5,7 +5,6 @@ import {
   registerThunk,
   profileThunk,
   updateUserThunk,
-  findAllUsersThunk,
   findUserByIdThunk,
   deleteUserThunk,
 } from '../../services/auth-thunks'
@@ -30,9 +29,6 @@ const authSlice = createSlice({
         state.currentUser = payload;
       })
       .addCase(registerThunk.fulfilled, (state, { payload }) => {
-      })
-      .addCase(findAllUsersThunk.fulfilled, (state, { payload }) => {
-        state.allUsers = payload;
       })
       .addCase(findUserByIdThunk.fulfilled, (state, { payload }) => {
         state.selectedUser = payload;
