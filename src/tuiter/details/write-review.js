@@ -35,7 +35,6 @@ const WriteReview = props => {
     reviewService
       .createReview(review)
       .then(response => {
-        console.log(response);
         // Navigate to detail page for the item that was reviewed.
         // return <Navigate to={`/detail/${result_id}`} />;
       })

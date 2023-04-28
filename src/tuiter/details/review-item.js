@@ -8,6 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './index.css';
 import * as userService from '../../services/auth-service';
+import Avatar from '../avatar/avatar';
 
 const ReviewItem = ({ review }) => {
   const { user_id, rating, time, text, likes, dislikes, bookmarks } = review;
@@ -26,14 +27,14 @@ const ReviewItem = ({ review }) => {
     fetchUser();
   }, [user_id]);
 
-  const avatar = user ? user.picture : null;
   const username = user ? user.username : null;
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   return (
     <div className='review-avatar'>
       <div>
         <div className='review-item col-lg-6'>
-          <img src={avatar} className='rounded-pill user-image me-2' />
+          <Avatar user={user} currentUser={currentUser} />
           <span>{username}</span>
         </div>
         <div className='review-rating'>
