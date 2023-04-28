@@ -31,10 +31,11 @@ import { findAllUsersThunk } from '../../services/auth-thunks';
 
 const WhoToFollowList = () => {
   const dispatch = useDispatch();
-  const { who, loading } = useSelector(state => state.usersData);
+  const { users, loading } = useSelector(state => state.users);
+
+  // console.log(users);
 
   useEffect(() => {
-    console.log(who);
     dispatch(findAllUsersThunk());
   }, [dispatch]);
 
@@ -44,9 +45,9 @@ const WhoToFollowList = () => {
         <h3>Who to follow</h3>
       </li>
       {loading && <li className='list-group-item'>Loading...</li>}
-      {/*{(who || []).map((user) => (*/}
-      {/*  <WhoToFollowListItem key={user._id} user={user} />*/}
-      {/*))}*/}
+      {(users || []).map(user => (
+        <WhoToFollowListItem key={user._id} user={user} />
+      ))}
     </ul>
   );
 };
