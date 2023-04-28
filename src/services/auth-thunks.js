@@ -36,8 +36,7 @@ export const updateUserThunk = createAsyncThunk(
   "users/updateUser",
   async (user, thunkAPI) => {
     const response = await userService.updateUserService(user);
-    const updatedUser = response.data;
-    return updatedUser;
+    return response.data;
   }
 );
 

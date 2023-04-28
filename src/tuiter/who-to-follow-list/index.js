@@ -31,9 +31,10 @@ import { findAllUsersThunk } from '../../services/auth-thunks';
 
 const WhoToFollowList = () => {
   const dispatch = useDispatch();
-  const { who, loading } = useSelector(state => state.who);
+  const { who, loading } = useSelector(state => state.usersData);
 
   useEffect(() => {
+    console.log(who);
     dispatch(findAllUsersThunk());
   }, [dispatch]);
 
