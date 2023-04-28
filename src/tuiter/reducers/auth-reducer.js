@@ -13,6 +13,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState: { currentUser: null, profileUpdated: false },
   reducers: {
+    setCurrentUser: (state, action) => {
+      state.currentUser = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -38,4 +41,5 @@ const authSlice = createSlice({
       });
   },
 });
+export const { setCurrentUser } = authSlice.actions;
 export default authSlice.reducer;

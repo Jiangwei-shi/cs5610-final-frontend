@@ -8,7 +8,6 @@ const WhatsHappening = () => {
   const dispatch = useDispatch();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const navigate = useNavigate();
-
   const tuitClickHandler = () => {
     if (!currentUser) {
       alert("you must login first, then you can post a tuit");

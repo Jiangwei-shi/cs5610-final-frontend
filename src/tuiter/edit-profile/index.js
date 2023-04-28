@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import { updateUserThunk } from '../../services/auth-thunks'
+import { setCurrentUser } from '../reducers/auth-reducer'
 const EditProfile = () => {
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const localUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -14,13 +15,18 @@ const EditProfile = () => {
 
   const handleSave = async () => {
     await dispatch(updateUserThunk(profile));
-    sessionStorage.setItem("currentUser", JSON.stringify(profile));
+    localStorage.setItem("currentUser", JSON.stringify(profile));
+    dispatch(setCurrentUser(profile));
     navigate("/profile");
   };
 
   useEffect(() => {
     setProfile(profile);
   }, [currentUser]);
+
+  if (!currentUser) {
+    return <div>你无权查看此页面，请先jc</div>;
+  }
 
   return(
     <div className="container">
@@ -38,12 +44,11 @@ const EditProfile = () => {
         </div>
 
         <div className="list-group-item p-0">
-          {/*<img className="img-fluid" src={`/images/${currentUser.bannerPicture}`}/>*/}
-          <img className="img-fluid" src={`/images/Elon_Mask.png`}/>
+          <img className="img-fluid" src={`/images/starship.jpg`}/>
         </div>
         <div className="user-top-part ps-4 pe-4 pb-4">
           <div>
-            <img className="user-img rounded-pill" src={`/images/Elon_Mask.png`}/>
+            <img className="user-img rounded-pill" src={currentUser.picture ? `/images/${currentUser.picture}` : "/images/anonymous.png"}/>
           </div>
           <br/>
 

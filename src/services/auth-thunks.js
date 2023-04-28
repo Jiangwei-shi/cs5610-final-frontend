@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import * as userService from './auth-service'
+import { setCurrentUser } from '../tuiter/reducers/auth-reducer'
 
 export const registerThunk = createAsyncThunk(
   "users/register",
@@ -36,7 +37,9 @@ export const updateUserThunk = createAsyncThunk(
   "users/updateUser",
   async (user, thunkAPI) => {
     const response = await userService.updateUserService(user);
-    return response.data;
+    const updatedUser = response.data;
+    thunkAPI.dispatch(setCurrentUser(updatedUser)); // 更新 Redux store 中的用户信息
+    return updatedUser;
   }
 );
 

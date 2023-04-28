@@ -15,12 +15,12 @@ import EditProfile from './edit-profile';
 import LoginScreen from './loginAndRegister/login-screen';
 import SearchScreen from './search/search-screen';
 import DetailScreen from './details/detail-screen';
+import RegisterScreen from './loginAndRegister/register-screen'
 import WriteReview from './details/write-review';
 
 const store = configureStore({
   reducer: {
     users: userReducer,
-    usersData: AuthReducer,
     tuitsData: tuitsReducer,
     currentUser: AuthReducer,
     results: resultsReducer,
@@ -46,6 +46,7 @@ function Tuiter() {
             <Route path='profile' element={<ProfileComponent />} />
             <Route path='edit-profile' element={<EditProfile />} />
             <Route path='login' element={<LoginScreen />} />
+            <Route path='register' element={<RegisterScreen />} />
             <Route path='search' element={<SearchScreen />} />
             <Route path='detail/:id' element={<DetailScreen />} />
             <Route path='write-review' element={<WriteReview />} />
