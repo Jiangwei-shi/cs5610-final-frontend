@@ -8,7 +8,6 @@ const WhoToFollowList = () => {
   const { users, loading } = useSelector(state => state.users);
 
   useEffect(() => {
-    console.log(users);
     dispatch(findAllUsersThunk());
   }, [dispatch]);
 

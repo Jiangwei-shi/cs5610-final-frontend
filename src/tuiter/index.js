@@ -48,6 +48,7 @@ function Tuiter() {
             <Route path='search' element={<SearchScreen />} />
             <Route path='detail/:id' element={<DetailScreen />} />
             <Route path='write-review/:result_id' element={<WriteReview />} />
+            <Route path='profile/:user_id' element={<ProfileComponent />} />
           </Routes>
         </div>
         <div className='d-sm-none d-md-none d-lg-block col-lg-4 col-xl-4'>
