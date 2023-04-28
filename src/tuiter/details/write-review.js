@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Rating from 'react-rating-stars-component';
 import reviewService from '../../services/review-service';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router'
 import { Link } from 'react-router-dom';
 
 const WriteReview = props => {
@@ -19,6 +19,11 @@ const WriteReview = props => {
 
   const handleSubmit = () => {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (!currentUser) {
+      alert("you must login first");
+      return;
+    }
 
     const review = {
       rating: rating,

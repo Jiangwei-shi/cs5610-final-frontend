@@ -6,9 +6,13 @@ import {
 } from '../../services/follow-thunks';
 import Avatar from '../avatar/avatar';
 
+
 const WhoToFollowListItem = ({ user }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const currentUser = useSelector(state => state.currentUser.currentUser);
+
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
@@ -24,15 +28,17 @@ const WhoToFollowListItem = ({ user }) => {
   }, [currentUser, user]);
 
   const handleFollowClick = async () => {
+    if (!currentUser) {
+      alert("you must login first, then you can follow others");
+      navigate("/login");
+      return;
+    }
+
     if (!isFollowing) {
-      await dispatch(
-        followUserThunk({ userId: currentUser._id, followUserId: user._id }),
-      );
+      await dispatch(followUserThunk({ userId: currentUser._id, followUserId: user._id }));
       setIsFollowing(true);
     } else {
-      await dispatch(
-        unfollowUserThunk({ userId: currentUser._id, followUserId: user._id }),
-      );
+      await dispatch(unfollowUserThunk({ userId: currentUser._id, followUserId: user._id }));
       setIsFollowing(false);
     }
   };

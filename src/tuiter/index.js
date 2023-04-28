@@ -16,6 +16,7 @@ import LoginScreen from './loginAndRegister/login-screen';
 import SearchScreen from './search/search-screen';
 import DetailScreen from './details/detail-screen';
 import WriteReview from './details/write-review';
+import RegisterScreen from './loginAndRegister/register-screen'
 
 const store = configureStore({
   reducer: {
@@ -39,12 +40,14 @@ function Tuiter() {
           style={{ position: 'relative' }}
         >
           <Routes>
+            <Route path='/' element={<HomeComponent />} />
             <Route path='tuiter' element={null} />
             <Route path='home' element={<HomeComponent />} />
             <Route path='explore' element={<ExploreComponent />} />
             <Route path='profile' element={<ProfileComponent />} />
             <Route path='edit-profile' element={<EditProfile />} />
             <Route path='login' element={<LoginScreen />} />
+            <Route path='register' element={<RegisterScreen />} />
             <Route path='search' element={<SearchScreen />} />
             <Route path='detail/:id' element={<DetailScreen />} />
             <Route path='write-review/:result_id' element={<WriteReview />} />

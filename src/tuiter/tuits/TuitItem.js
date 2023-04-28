@@ -39,7 +39,7 @@ const TuitItem = (
           <div className="d-flex justify-content-between">
             <div className="flex-column">
               <b>{post.username}</b><FontAwesomeIcon icon={faCheckCircle} className="ms-1 me-2 text-primary"/>
-              <span className="text-dark">@ {post.topic} · {post.time}</span>
+              <span className="text-dark">@ {post.username} · {post.time}</span>
             </div>
             <i className="bi bi-x-lg float-end clickable"
                onClick={() => deleteTuitHandler(post._id)}></i>

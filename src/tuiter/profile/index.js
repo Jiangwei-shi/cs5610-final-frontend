@@ -68,8 +68,10 @@ function ProfileScreen() {
         <div className='list-group-item p-0'>
           <img className='img-fluid' src={`/images/starship.jpg`} />
         </div>
+
         <div className='user-top-part ps-4 pe-4 pb-4'>
           <div className='d-flex justify-content-between'>
+
             <div>
               {/* <img
                 className='user-img rounded-pill'
