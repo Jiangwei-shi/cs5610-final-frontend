@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import Rating from 'react-rating-stars-component';
+import reviewService from '../../services/review-service';
+import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 
-const WriteReview = () => {
+const WriteReview = props => {
+  const { result_id } = useParams();
   const [rating, setRating] = useState(3);
   const [reviewText, setReviewText] = useState('');
 
@@ -14,12 +18,25 @@ const WriteReview = () => {
   };
 
   const handleSubmit = () => {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
     const review = {
-      rating,
-      reviewText,
+      rating: rating,
+      text: reviewText,
+      user_id: currentUser._id,
+      result_id: result_id,
     };
 
-    console.log(review);
+    reviewService
+      .createReview(review)
+      .then(response => {
+        console.log(response);
+        // Navigate to detail page for the item that was reviewed.
+        // return <Navigate to={`/detail/${result_id}`} />;
+      })
+      .catch(error => {
+        console.log('Error creating review:', error);
+      });
   };
 
   return (
@@ -43,9 +60,16 @@ const WriteReview = () => {
         ></textarea>
       </div>
       <div>
-        <button className='btn btn-primary' onClick={handleSubmit}>
+        {/* <button className='btn btn-primary' onClick={handleSubmit}>
           Post Review
-        </button>
+        </button> */}
+        <Link
+          to={`/detail/${result_id}`}
+          className='btn btn-primary'
+          onClick={handleSubmit}
+        >
+          Post Review
+        </Link>
       </div>
     </div>
   );
