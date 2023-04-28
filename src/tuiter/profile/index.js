@@ -16,32 +16,6 @@ function ProfileScreen() {
   const navigate = useNavigate();
   const [isFetchingProfile, setIsFetchingProfile] = useState(false);
 
-  console.log('user_id: ' + user_id);
-  const updateLocalStorage = currentUser => {
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-  };
-
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     updateLocalStorage(currentUser);
-  //     // setProfile(currentUser);
-  //   }
-  // }, [currentUser]);
-
-  // useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     setIsFetchingProfile(true);
-
-  //     if (user_id) {
-  //       const { payload } = await dispatch(profileThunk(user_id)); // Pass user_id to the profileThunk
-  //       setProfile(payload);
-  //     } else {
-  //       setProfile(currentUser || localUser);
-  //     }
-  //   };
-  //   fetchProfile();
-  // }, [dispatch, user_id, currentUser, localUser]); // Add user_id as a dependency
-
   useEffect(() => {
     const fetchProfile = async () => {
       setIsFetchingProfile(true);

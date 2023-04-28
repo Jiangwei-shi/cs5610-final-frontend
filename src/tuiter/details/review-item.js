@@ -27,7 +27,6 @@ const ReviewItem = ({ review }) => {
     fetchUser();
   }, [user_id]);
 
-  const avatar = user ? user.picture : null;
   const username = user ? user.username : null;
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -35,10 +34,6 @@ const ReviewItem = ({ review }) => {
     <div className='review-avatar'>
       <div>
         <div className='review-item col-lg-6'>
-          {/* <img
-            src={`/images/${avatar}`}
-            className='rounded-pill user-image me-2'
-          /> */}
           <Avatar user={user} currentUser={currentUser} />
           <span>{username}</span>
         </div>
