@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import StarRating from '../rating/star-rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -7,18 +7,34 @@ import {
   faThumbsDown,
 } from '@fortawesome/free-solid-svg-icons';
 import './index.css';
+import * as userService from '../../services/auth-service';
 
 const ReviewItem = ({ review }) => {
-  console.log(review);
-  const { user, rating, time, text, likes, dislikes, bookmarks } = review;
-  const avatar = user.avatar;
+  const { user_id, rating, time, text, likes, dislikes, bookmarks } = review;
+  const [user, setUser] = useState(null);
+  // console.log(userService.findUserById(user_id));
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const user = await userService.findUserById(user_id);
+        setUser(user);
+      } catch (error) {
+        console.error(`Error fetching user: ${error}`);
+      }
+    }
+    fetchUser();
+  }, [user_id]);
+
+  const avatar = user ? user.picture : null;
+  const username = user ? user.username : null;
 
   return (
     <div className='review-avatar'>
       <div>
         <div className='review-item col-lg-6'>
           <img src={avatar} className='rounded-pill user-image me-2' />
-          <span>{user.name}</span>
+          <span>{username}</span>
         </div>
         <div className='review-rating'>
           <StarRating rating={rating} />

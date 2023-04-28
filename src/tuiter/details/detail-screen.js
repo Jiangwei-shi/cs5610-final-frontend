@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import ReviewList from './review-list';
 import ItemDetail from './yelp-detail';
-import reviews from './reviews';
-import item from './item';
+// import reviews from './reviews';
 import getDetail from '../../services/detail-service';
+import getReviews from '../../services/review-service';
 
 const DetailScreen = () => {
   const { id } = useParams();
   const [data, setData] = useState();
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     getDetail(id).then(data => {
       setData(data);
+      getReviews(data.id).then(reviews => {
+        setReviews(reviews);
+      });
     });
   }, [id]);
 
