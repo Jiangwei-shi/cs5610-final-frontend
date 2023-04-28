@@ -7,4 +7,13 @@ const getReviews = rid => {
   });
 };
 
-export default getReviews;
+const createReview = review => {
+  return axios.post(REVIEWS_API, review).then(response => {
+    return response.data;
+  });
+};
+
+export default {
+  getReviews,
+  createReview,
+};
