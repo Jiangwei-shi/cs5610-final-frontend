@@ -71,7 +71,6 @@ function ProfileScreen() {
 
         <div className='user-top-part ps-4 pe-4 pb-4'>
           <div className='d-flex justify-content-between'>
-
             <div>
               {/* <img
                 className='user-img rounded-pill'
@@ -81,12 +80,24 @@ function ProfileScreen() {
                     : '/images/default.png'
                 }
               /> */}
-              <img
+              {/* <img
                 className='user-img rounded-pill'
                 src={
                   isCurrentUserProfile
                     ? `/images/${currentUser.picture}`
                     : `/images/${profile.picture}`
+                }
+              /> */}
+              <img
+                className='user-img rounded-pill'
+                src={
+                  isCurrentUserProfile
+                    ? currentUser.picture
+                      ? `/images/${currentUser.picture}`
+                      : '/images/default.png'
+                    : profile.picture
+                    ? `/images/${profile.picture}`
+                    : '/images/default.png'
                 }
               />
             </div>

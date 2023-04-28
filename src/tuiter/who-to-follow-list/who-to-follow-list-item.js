@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 import {
   followUserThunk,
   unfollowUserThunk,
 } from '../../services/follow-thunks';
 import Avatar from '../avatar/avatar';
-
 
 const WhoToFollowListItem = ({ user }) => {
   const navigate = useNavigate();
@@ -29,16 +29,20 @@ const WhoToFollowListItem = ({ user }) => {
 
   const handleFollowClick = async () => {
     if (!currentUser) {
-      alert("you must login first, then you can follow others");
-      navigate("/login");
+      alert('you must login first, then you can follow others');
+      navigate('/login');
       return;
     }
 
     if (!isFollowing) {
-      await dispatch(followUserThunk({ userId: currentUser._id, followUserId: user._id }));
+      await dispatch(
+        followUserThunk({ userId: currentUser._id, followUserId: user._id }),
+      );
       setIsFollowing(true);
     } else {
-      await dispatch(unfollowUserThunk({ userId: currentUser._id, followUserId: user._id }));
+      await dispatch(
+        unfollowUserThunk({ userId: currentUser._id, followUserId: user._id }),
+      );
       setIsFollowing(false);
     }
   };

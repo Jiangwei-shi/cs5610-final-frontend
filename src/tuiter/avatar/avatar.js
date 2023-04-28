@@ -15,7 +15,7 @@ const Avatar = ({ user, currentUser, size = 'default' }) => {
   return (
     <Link to={profilePath}>
       <img
-        src={`/images/${user.picture}`}
+        src={user.picture ? `/images/${user.picture}` : `/images/default.png`}
         className={`rounded-pill ${avatarSize} me-2`}
       />
     </Link>
