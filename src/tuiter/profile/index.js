@@ -55,7 +55,7 @@ function ProfileScreen() {
         <div className="user-top-part ps-4 pe-4 pb-4">
           <div className="d-flex justify-content-between">
             <div>
-              <img className="user-img rounded-pill" src={currentUser ? `/images/${currentUser.picture}` : "/images/default.png"}/>
+              <img className="user-img rounded-pill" src={currentUser ? `/images/${currentUser.picture}` : "/images/anonymous.png"}/>
             </div>
             <div>
               <button

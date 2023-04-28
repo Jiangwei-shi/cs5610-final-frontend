@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { followUserThunk, unfollowUserThunk } from "../../services/follow-thunks";
+import { useNavigate } from 'react-router'
 
 
 const WhoToFollowListItem = ({ user }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const currentUser = useSelector((state) => state.currentUser.currentUser);
   const [isFollowing, setIsFollowing] = useState(false);
 
@@ -18,14 +19,16 @@ const WhoToFollowListItem = ({ user }) => {
   }, [currentUser, user]);
 
   const handleFollowClick = async () => {
+    if (!currentUser) {
+      alert("you must login first, then you can follow others");
+      navigate("/login");
+      return;
+    }
+
     if (!isFollowing) {
-      console.log(currentUser);
-      console.log(user);
       await dispatch(followUserThunk({ userId: currentUser._id, followUserId: user._id }));
       setIsFollowing(true);
     } else {
-      console.log(currentUser);
-      console.log(user);
       await dispatch(unfollowUserThunk({ userId: currentUser._id, followUserId: user._id }));
       setIsFollowing(false);
     }
@@ -35,11 +38,11 @@ const WhoToFollowListItem = ({ user }) => {
     <li className="list-group-item">
       <div className="row">
         <div className="col-2">
-          <img className="rounded-circle" height={48} src={user.picture ? `/images/${user.picture}` : "/images/default.png"} />
+          <img className="rounded-circle" height={45} src={user.picture ? `/images/${user.picture}` : "/images/default.png"} style={{ marginRight: "1rem" }} />
         </div>
         <div className="col-8">
           <div className="fw-bold">{user.username}</div>
-          <div>@{user.lastName}</div>
+          <div>@{user.username}</div>
         </div>
         <div className="col-2">
           <button
