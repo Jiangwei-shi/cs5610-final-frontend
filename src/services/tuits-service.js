@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // const TUITS_API = "http://localhost:4000/api/tuits";
-const TUITS_API = "https://tuiter-node-backend-41ea.onrender.com//api/tuits"
+const TUITS_API = "https://tuiter-node-backend-41ea.onrender.com/api/tuits"
 
 // online part
 // const API_BASE = process.env.REACT_APP_API_BASE
