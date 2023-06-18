@@ -33,12 +33,12 @@ function LoginScreen() {
                onChange={(event) => setPassword(event.target.value)}
         />
       </div>
-      <button onClick={handleLogin}>
+      <button onClick={handleLogin} className="btn btn-outline-primary m-2">
         Login
       </button>
-      <button onClick={() => {
-      navigate('/tuiter/register');
-      }}>register</button>
+      <button onClick={() => {navigate('/tuiter/register');}}
+              className="btn btn-outline-primary m-2"
+      >register</button>
     </div>
   );
 }

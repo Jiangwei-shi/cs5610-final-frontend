@@ -32,58 +32,77 @@ function RegisterScreen() {
   return (
     <div>
       <h1>Register Screen</h1>
-      <div>
-        <label>Username</label>
+
+      <div className="form-floating mb-3">
         <input
-          className="form-control"
+          className="form-control "
           type="text"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
+          placeholder="Username"
         />
+        <label form="floatingInput">Username</label>
       </div>
-      <div>
-        <label>Password</label>
+
+      <div className="form-floating mb-3">
         <input
           className="form-control"
           type="password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
+          placeholder="Username"
         />
+        <label form="floatingPassword">Password</label>
       </div>
 
-      <div>
-        <label>Roles:</label>
-        <input
-          type="radio"
-          value="admin"
-          checked={role === "admin"}
-          onChange={handleRoleChange}
-        />
-        <label>Admin</label>
-        <input
-          type="radio"
-          value="user"
-          checked={role === "user"}
-          onChange={handleRoleChange}
-        />
-        <label>User</label>
-        <input
-          type="radio"
-          value="guest"
-          checked={role === "guest"}
-          onChange={handleRoleChange}
-        />
-        <label>Guest</label>
-        <input
-          type="radio"
-          value="moderator"
-          checked={role === "moderator"}
-          onChange={handleRoleChange}
-        />
-        <label>Moderator</label>
+      <div className="mb-3">
+        <label className="col-form-label">Roles:</label>
+        <div className="d-flex">
+          <div className="form-check me-2">
+            <input
+              className="form-check-input"
+              type="radio"
+              value="admin"
+              checked={role === "admin"}
+              onChange={handleRoleChange}
+            />
+            <label className="form-check-label">Admin</label>
+          </div>
+          <div className="form-check me-2">
+            <input
+              className="form-check-input"
+              type="radio"
+              value="user"
+              checked={role === "user"}
+              onChange={handleRoleChange}
+            />
+            <label className="form-check-label">User</label>
+          </div>
+          <div className="form-check me-2">
+            <input
+              className="form-check-input"
+              type="radio"
+              value="guest"
+              checked={role === "guest"}
+              onChange={handleRoleChange}
+            />
+            <label className="form-check-label">Guest</label>
+          </div>
+          <div className="form-check me-2">
+            <input
+              className="form-check-input"
+              type="radio"
+              value="moderator"
+              checked={role === "moderator"}
+              onChange={handleRoleChange}
+            />
+            <label className="form-check-label">Moderator</label>
+          </div>
+        </div>
       </div>
 
-      <button onClick={handleRegister}>Register</button>
+
+      <button onClick={handleRegister} className={"btn btn-outline-primary"}>Register</button>
     </div>
   );
 }
